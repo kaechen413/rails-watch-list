@@ -1,0 +1,10 @@
+<h1>See all the Lists</h1>
+<hr>
+<%= simple_form_for @list do |f| %>
+  <%= f.input :name %>
+  <%= f.submit class: 'btn btn-success' %>
+<% end %>
+<hr>
+<% @lists.each do |list| %>
+  <%= link_to list.name, list_path(list) %>
+<% end %>
