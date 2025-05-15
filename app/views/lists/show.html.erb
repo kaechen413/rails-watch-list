@@ -1,61 +1,67 @@
-<h1><%= @list.name %> Detail</h1>
-<%= link_to "back to lists", lists_path %>
-<hr>
-<%= simple_form_for [@list, @bookmark] do |f| %>
-  <%= f.association :movie %>
-  <%= f.input :comment %>
-  <%= f.submit class: 'btn btn-success' %>
-<% end %>
-<hr>
-<% @bookmarks.each do |bookmark| %>
-  <h3><%= bookmark.movie.title %></h3>
-  <p><%= bookmark.movie.overview %></p>
-  <p><%= bookmark.movie.poster_url %></p>
-  <p><%= bookmark.movie.rating %></p>
-  <%= link_to bookmark_path(bookmark), data: { turbo_method: :delete, turbo_confirm: "are you sure?" } do %>
-    <i class="fa-solid fa-trash"></i>
-  <% end %>
-<% end %>
-<hr>
-<div class="row">
-  <div class="col-8">
-    <h3>Reviews</h3>
-    <div class="reviews">
-      <% if @list.reviews.any? %>
-        <% @list.reviews.each do |review|%>
-          <div class="row justify-content-between align-items-center">
-            <div class="col-8 flex-grow-1">
-              <strong><%= review.content %></strong>
-            </div>
-            <div class="col-3 d-flex justify-content-end">
-              <% review.rating.times do %>
-                <i class="fa-solid fa-star"></i>
-              <% end %>
-            </div>
-            <div class="col-1">
-              <%= link_to review_path(review), data: { turbo_method: :delete, turbo_confirm: "are you sure?" } do %>
-                <i class="fa-solid fa-trash"></i>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
+<div class="banner">
+  <h2><strong><%= @list.name %></strong></h2>
+  <%= render "lists/model_button", model: [@list, @bookmark], message: "Mark a new movie!" %>
+</div>
+<div class="cards">
+  <% @bookmarks.each do |bookmark| %>
+    <div class="card-pick">
+      <%= image_tag bookmark.movie.poster_url, alt: "img" %>
+      <div class="card-pick-info">
+        <h2><%= bookmark.movie.title %></h2>
+        <p><%= bookmark.movie.overview %></p>
+        <p>
+          <% bookmark.movie.rating.times do %>
+            <i class="fa-solid fa-star"></i>
+          <% end %>
+        </p>
+      </div>
+      <%= link_to bookmark_path(bookmark),class: "trash-icon", data: { turbo_method: :delete, turbo_confirm: "are you sure?" } do %>
+        <i class="fa-solid fa-trash"></i>
       <% end %>
     </div>
-  </div>
-  <div class="col-4">
-    <%= simple_form_for [@list, @review] do |f| %>
-      <%= f.input :content %>
-      <div class="star-rating">
-        <%#= f.collection_radio_buttons :rating, [[1], [2], [3], [4], [5]], :first, :last do |b| %>
-          <%#= b.radio_button%>
-          <%# end %>
-          <input type="radio" name="review[rating]" value="1" />
-          <input type="radio" name="review[rating]" value="2" />
-          <input type="radio" name="review[rating]" value="3" checked />
-          <input type="radio" name="review[rating]" value="4" />
-          <input type="radio" name="review[rating]" value="5" />
-        </div>
-        <%= f.submit :submit, class: "btn btn-secondary mt-3"%>
-      <% end %>
+  <% end %>
+</div>
+<div class="container">
+  <div class="row mt-3">
+    <div class="col-8 mt-3">
+      <h3>Reviews</h3>
+      <div class="reviews">
+        <% if @list.reviews.any? %>
+          <% @list.reviews.each do |review|%>
+            <div class="row justify-content-between align-items-center">
+              <div class="col-8 flex-grow-1">
+                <strong><%= review.content %></strong>
+              </div>
+              <div class="col-3 d-flex justify-content-end">
+                <% review.rating.times do %>
+                  <i class="fa-solid fa-star"></i>
+                <% end %>
+              </div>
+              <div class="col-1">
+                <%= link_to review_path(review), data: { turbo_method: :delete, turbo_confirm: "are you sure?" } do %>
+                  <i class="fa-solid fa-trash"></i>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-4 mt-3">
+      <%= simple_form_for [@list, @review] do |f| %>
+        <%= f.input :content %>
+        <div class="star-rating">
+          <%#= f.collection_radio_buttons :rating, [[1], [2], [3], [4], [5]], :first, :last do |b| %>
+            <%#= b.radio_button%>
+            <%# end %>
+            <input type="radio" name="review[rating]" value="1" />
+            <input type="radio" name="review[rating]" value="2" />
+            <input type="radio" name="review[rating]" value="3" checked />
+            <input type="radio" name="review[rating]" value="4" />
+            <input type="radio" name="review[rating]" value="5" />
+          </div>
+          <%= f.submit :submit, class: "btn btn-secondary mt-3"%>
+        <% end %>
+      </div>
     </div>
   </div>

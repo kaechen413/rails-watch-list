@@ -1,10 +1,28 @@
-<h1>See all the Lists</h1>
-<hr>
-<%= simple_form_for @list do |f| %>
-  <%= f.input :name %>
-  <%= f.submit class: 'btn btn-success' %>
-<% end %>
-<hr>
-<% @lists.each do |list| %>
-  <%= link_to list.name, list_path(list) %>
-<% end %>
+<div class="banner">
+  <button type="button" class="btn btn-success mt-5" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Create a new list!</button>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Create a new list!</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <%= simple_form_for @list do |f| %>
+          <div class="modal-body">
+            <%= f.input :name %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <%= f.submit "submit", class: 'btn btn-success' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <hr>
+</div>
+<div class="container mt-3">
+  <% @lists.each do |list| %>
+    <%= link_to list.name, list_path(list) %>
+  <% end %>
+</div>
