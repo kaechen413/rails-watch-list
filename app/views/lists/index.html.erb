@@ -1,40 +1,49 @@
-<div class="banner">
-  <button type="button" class="btn btn-success mt-5" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Create a new list!</button>
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Create a new list!</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <%= simple_form_for @list do |f| %>
-          <div class="modal-body">
-            <%= f.input :name %>
-            <%= f.input :photo, as: :file %>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <%= f.submit "submit", class: 'btn btn-success' %>
-          </div>
-        <% end %>
-      </div>
-    </div>
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://www.marinabaysands.com/content/dam/marinabaysands/entertainment/shows/wicked/wicked-masthead-desktop-1920x1080-v2.jpg);">
+  <div class="container">
+    <h1>Your <strong>watch list</strong>!</h1>
+    <p>What can I say? This is the best personal watch list!!</p>
   </div>
-  <hr>
 </div>
 <div class="mt-3">
   <div class="cards">
     <% @lists.each do |list| %>
-      <div class="card-list">
-        <%= link_to list_path(list), class: "text-decoration-none" do %>
-          <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= list.photo.attached? ? cl_image_path(list.photo.key) : 'https://cdn-ak.f.st-hatena.com/images/fotolife/n/nativecamp_official/20220630/20220630114443.png'%>)">
-            <%= list.name %>
+      <div class="card-hello">
+        <%= link_to list_path(list),class: "trash-icon", data: { turbo_method: :delete, turbo_confirm: "are you sure?" } do %>
+          <i class="fa-solid fa-trash"></i>
+        <% end %>
+        <% if list.photo.attached? %>
+          <%= cl_image_tag list.photo.key %>
+        <% else %>
+          <%= image_tag 'https://cdn-ak.f.st-hatena.com/images/fotolife/n/nativecamp_official/20220630/20220630114443.png' %>
+        <% end %>
+        <%= link_to list_path(list), class: "text-decoration-none text-black" do %>
+          <div class="card-hello-info">
+            <h2><%= list.name %></h2>
+            <p>Hover over it!</p>
           </div>
-          <%= link_to list_path(list),class: "trash-icon", data: { turbo_method: :delete, turbo_confirm: "are you sure?" } do %>
-            <i class="fa-solid fa-trash"></i>
+        <% end %>
+      </div>
+    <% end %>
+    <button type="button" class="btn p-0 border-0 bg-transparent text-success fs-1" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo"><i class="fa-solid fa-square-plus"></i></button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Create a new list!</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <%= simple_form_for @list do |f| %>
+            <div class="modal-body">
+              <%= f.input :name %>
+              <%= f.input :photo, as: :file %>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <%= f.submit "submit", class: 'btn btn-success' %>
+            </div>
           <% end %>
         </div>
-      <% end %>
-    <% end %>
+      </div>
+    </div>
   </div>
 </div>
