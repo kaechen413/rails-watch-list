@@ -26,7 +26,9 @@
   <div class="cards">
     <% @lists.each do |list| %>
       <%= link_to list_path(list), class: "text-decoration-none" do %>
-        <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/breakfast.jpg)">
+        <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('<%= list.phone.attached? ? cl_image_path(list.phone.key) : 'https://cdn-ak.f.st-hatena.com/images/fotolife/n/nativecamp_official/20220630/20220630114443.png'%>
+        '
+        )">
           <%= list.name %>
         </div>
       <% end %>
