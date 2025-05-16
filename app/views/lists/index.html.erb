@@ -25,9 +25,14 @@
 <div class="mt-3">
   <div class="cards">
     <% @lists.each do |list| %>
-      <%= link_to list_path(list), class: "text-decoration-none" do %>
-        <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= list.photo.attached? ? cl_image_path(list.photo.key) : 'https://cdn-ak.f.st-hatena.com/images/fotolife/n/nativecamp_official/20220630/20220630114443.png'%>)">
-          <%= list.name %>
+      <div class="card-list">
+        <%= link_to list_path(list), class: "text-decoration-none" do %>
+          <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= list.photo.attached? ? cl_image_path(list.photo.key) : 'https://cdn-ak.f.st-hatena.com/images/fotolife/n/nativecamp_official/20220630/20220630114443.png'%>)">
+            <%= list.name %>
+          </div>
+          <%= link_to list_path(list),class: "trash-icon", data: { turbo_method: :delete, turbo_confirm: "are you sure?" } do %>
+            <i class="fa-solid fa-trash"></i>
+          <% end %>
         </div>
       <% end %>
     <% end %>

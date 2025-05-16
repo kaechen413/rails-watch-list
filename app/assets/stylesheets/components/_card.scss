@@ -55,6 +55,17 @@
   margin: 10px 30px;
 }
 
+.card-list {
+  position: relative;
+
+  .trash-icon {
+  position: absolute;
+  top: 12px;
+  right: 36px;
+  font-size: 24px;
+  color: white;
+  }
+}
 .card-pick {
   /*fixed*/
   display: flex;
