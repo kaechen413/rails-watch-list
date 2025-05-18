@@ -1,6 +1,11 @@
-<div class="banner-show">
-  <h2><strong><%= @list.name %></strong></h2>
-  <%= render "lists/model_button", model: [@list, @bookmark], message: "Mark a new movie!" %>
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(<%= asset_url('banner-show.jpg') %>)">
+  <div class="container">
+    <h1><%= @list.name %></h1>
+  </div>
+</div>
+<div class="justify-content-between m-3 d-flex">
+  <h3><%= @bookmarks.count %> bookmarks found</h3>
+  <%= render "lists/model_button", model: [@list, @bookmark], message: "Add a new movie" %>
 </div>
 <div class="cards">
   <% @bookmarks.each do |bookmark| %>
@@ -61,7 +66,7 @@
               <input type="radio" name="review[rating]" value="4" />
               <input type="radio" name="review[rating]" value="5" />
             </div>
-            <%= f.submit :submit, class: "btn btn-secondary mt-3"%>
+            <%= f.submit :submit, class: "btn btn-secondary my-3"%>
           <% end %>
         </div>
       </div>
